@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>{{pageTitle}} &bull; Realm of Warriors</title>
+
+<meta charset="iso-8859-1">
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/vendor/socket-io-client.js"></script>
+<script type="text/javascript" src="/js/vendor/modal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script type="text/javascript" src="/js/preload.js"></script>
+
+<script>
+for(var i = 0; i < IMGS.length; i++){
+	var preImg = $('<link rel="prefetch" href="'+IMGS[i]+'" as="image">');
+	$('head').append(preImg);
+}
+var Socket = io.connect();
+var RoW = {
+	host: '{{globalVar "host"}}',
+	port: {{globalVar "port"}},
+	init: () => {
+		$(document).on($.modal.AFTER_CLOSE, function(event, modal){
+			$(modal.$elm[0]).remove();
+		});
+	  },
+	  models: {
+	    Player: {
+	      id: 0,
+	      pid: 0,
+	      name: '',
+	      gender: '',
+	      avatar: '',
+	      power: 0,
+	      realm: 0,
+	      chat: 0,
+	      food: 0,
+	      wood: 0,
+	      stone: 0,
+	      ore: 0,
+	      gold: 0,
+	      platinum: 0,
+	    },
+	    User: {
+	      id: 0,
+	      email: '',
+	      token: '',
+	    }
+	  },
+	  controllers: {
+	    Player: {
+	      init: () => {
+	        Socket.on("player-get-success", (data) => {
+	          RoW.models.Player.id = data.id;
+	          RoW.models.Player.pid = data.pid;
+	          RoW.models.Player.name = data.name;
+	          RoW.models.Player.gender = data.gender;
+	          RoW.models.Player.avatar = data.avatar;
+	          RoW.models.Player.chat = data.chat;
+	          RoW.models.Player.power = data.power;
+	          RoW.models.Player.realm = data.realm;
+	          RoW.models.Player.food = data.food;
+	          RoW.models.Player.wood = data.wood;
+	          RoW.models.Player.stone = data.stone;
+	          RoW.models.Player.ore = data.ore;
+	          RoW.models.Player.gold = data.gold;
+	          RoW.models.Player.platinum = data.platinum;
+	        });
+	        
+	        Socket.on('player-update-incoming', (data) => {
+	          RoW.models.Player.id = data.id;
+	          RoW.models.Player.pid = data.pid;
+	          RoW.models.Player.name = data.name;
+	          RoW.models.Player.gender = data.gender;
+	          RoW.models.Player.avatar = data.avatar;
+	          RoW.models.Player.chat = data.chat;
+	          RoW.models.Player.power = data.power;
+	          RoW.models.Player.realm = data.realm;
+	          RoW.models.Player.food = data.food;
+	          RoW.models.Player.wood = data.wood;
+	          RoW.models.Player.stone = data.stone;
+	          RoW.models.Player.ore = data.ore;
+	          RoW.models.Player.gold = data.gold;
+	          RoW.models.Player.platinum = data.platinum;
+	        });
+	      }
+	    },
+	    User: {
+	      init: () => {
+	        Socket.on("login-success", (data) => {
+	          RoW.models.User.id = data.user.id;
+	          RoW.models.User.email = data.user.email;
+	          
+	          RoW.models.Player.name = data.player.name;
+	          RoW.models.Player.gender = data.player.gender;
+	          RoW.models.Player.avatar = data.player.avatar;
+	          RoW.models.Player.chat = data.player.chat;
+	          RoW.models.Player.power = data.player.power;
+	          RoW.models.Player.realm = data.player.realm;
+	          RoW.models.Player.food = data.player.food;
+	          RoW.models.Player.wood = data.player.wood;
+	          RoW.models.Player.stone = data.player.stone;
+	          RoW.models.Player.ore = data.player.ore;
+	          RoW.models.Player.gold = data.player.gold;
+	          RoW.models.Player.platinum = data.player.platinum;
+	          RoW.models.User.token = data.token;
+	        
+	          setCookie('uid', RoW.models.User.id, 365);
+	        
+	          window.location = "http://"+RoW.host+"/game";
+	      });
+	      
+	        Socket.on("login-failed", (data) => {
+	          window.location = "http://"+RoW.host+data.redirect;
+	        });
+	      
+	        Socket.on("register-success", (data) => {
+	          window.location = "http://"+RoW.host+data.redirect;
+	        });
+	      
+	        Socket.on("logout-success", (data) => {
+	          window.location = "http://"+RoW.host;
+	        });
+	      
+	        Socket.on("user-update-incoming", (data) => {
+	          RoW.models.User.id = data.user.id;
+	          RoW.models.User.email = data.user.email;
+	          RoW.models.User.token = data.token;
+	        });
+	      
+	        Socket.on("user-get-success", (data) => {
+	          RoW.models.User.id = data.user.id;
+	          RoW.models.User.email = data.user.email;
+	          RoW.models.User.token = data.token;
+	        });
+	      }
+	    },
+	    Tpl: {
+	      init: () => {
+	        Socket.on("tpl-gender-result", (data) => {
+	          var html = RoW.controllers.Tpl.build(data);
+	          console.log(html);
+	          $('.avatars').html(html);
+	        });
+	      },
+	      build: (data) => {
+	        var template = Handlebars.compile(data.html);
+	        return template(data.data);
+	      },
+	    }
+	  }
+	};
+	
+	 document.addEventListener( 'DOMContentLoaded', () => {
+	 RoW.init();
+	 RoW.controllers.User.init();
+	 RoW.controllers.Tpl.init();
+	 RoW.controllers.Player.init();
+}, false);
+	</script>
+	<link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&autoLogAppEvents=1&version=v2.12&appId=199922540602335';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-100 flex-column">
+	<header class="masthead mb-auto">
+		<div class="inner">
+			<h3 class="masthead-brand">Realm of Warriors</h3>
+			<nav class="nav nav-masthead justify-content-center">
+				<a class="nav-link active" href="/">Main</a>
+				
+				<a class="nav-link" href="/login/">Login</a>
+				<a class="nav-link" href="/register/">Register</a>
+				
+			</nav>
+		</div>
+	</header>
+	<main role="main" class="inner cover">
+		{{{body}}}
+	</main>
+	
+	<!-- Footer -->
+	<footer class="mastfoot mt-auto">
+		<p class="lead">Copyright &copy; 2020 - All Rights Reserved - <a href="#">Realm of Warriors</a></p>
+		
+		<p><a href="mailto:jason.allen.oneal@gmail.com">jason dot allen dot oneal at gmail dot com</a></p>
+	</footer>
+	<!-- Footer -->
+</div>
+
+<script>
+$(document).on('change', '#inputGender', function(e){
+  e.preventDefault();
+  var gender = $(this).val();
+  Socket.emit('tpl-gender-change', gender);
+});
+
+$(document).on('click', '#register', function(e){
+	e.preventDefault();
+	
+	var name = $('input[name=username]').val(),
+		email = $('input[name=email]').val(),
+		gender = $('select[name=gender]').val(),
+		avatar = $("input[name='avatar']:checked").val(),
+		password = $('input[name=password]').val();
+	
+	if(name == '' || email == '' || password == ''){
+		// modal showing error
+	}else{
+	 var data = {
+	   name: name,
+	   email: email,
+	   gender: gender,
+	   avatar: avatar,
+	   password: password
+	 };
+
+		Socket.emit('user-register', data);
+	}
+});
+
+$(document).on('click', '#login', function(e){
+	e.preventDefault();
+	
+	var email = $('input[name=email]').val(),
+		password = $('input[name=password]').val();
+	
+	if(email == '' || password == ''){
+		// modal showing error
+		console.log('login error');
+	}else{
+		Socket.emit('user-login', {email: email, password: password});
+	}
+});
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {   
+    document.cookie = name+'=; Max-Age=-99999999;';  
+}
+</script>
+</body>
+</html>

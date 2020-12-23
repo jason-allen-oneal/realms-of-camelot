@@ -1,0 +1,263 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/game.css" type="text/css" media="all">
+	<link rel="stylesheet" href="/css/chat.css" type="text/css" media="all">
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+	<script type="text/javascript" src="/js/vendor/socket-io-client.js"></script>
+	<script type="text/javascript" src="/js/vendor/modal.js"></script>
+	<script type="text/javascript" src="/js/preload.js"></script>
+	<script type="text/javascript" src="/js/main.js"></script>
+	<script>
+	for(var i = 0; i < IMGS.length; i++){
+		var preImg = $('<link rel="prefetch" href="'+IMGS[i]+'" as="image">');
+		$('head').append(preImg);
+	}
+	
+	var Socket = io.connect();
+	Socket.on("connect",() => {
+	  console.log("Connected..", Socket.connected);
+	});
+	
+var RoW = {
+ host: '{{globalVar "host"}}',
+ port: {{globalVar "port"}},
+ init: () => {
+  $(document).on($.modal.AFTER_CLOSE, function(event, modal){
+   $(modal.$elm[0]).remove();
+  });
+ },
+ Game:{
+  tileTypesObject: {
+   'moor': 0,
+   'plain': 1,
+   'grassland': 2,
+   'lake': 3,
+   'hill': 4,
+   'mountain': 5,
+   'barbarian': 6,
+   'city': 7
+  },
+  tileTypesArray: ['moor', 'plain', 'grassland', 'lake', 'hill', 'mountain', 'barbarian', 'city'],
+ },
+ models: {
+  Player: {
+	      id: 0,
+	      pid: 0,
+	      name: '',
+	      gender: '',
+	      avatar: '',
+	      power: 0,
+	      realm: 0,
+	      chat: 0,
+	      food: 0,
+	      wood: 0,
+	      stone: 0,
+	      ore: 0,
+	      gold: 0,
+	      platinum: 0,
+	    },
+	    User: {
+	      id: 0,
+	      email: '',
+	      token: '',
+	    }
+	  },
+	  controllers: {
+	    Player: {
+	      init: () => {
+	        Socket.on("player-get-success", (data) => {
+	          RoW.models.Player.id = data.id;
+	          RoW.models.Player.pid = data.pid;
+	          RoW.models.Player.name = data.name;
+	          RoW.models.Player.gender = data.gender;
+	          RoW.models.Player.avatar = data.avatar;
+	          RoW.models.Player.chat = data.chat;
+	          RoW.models.Player.power = data.power;
+	          RoW.models.Player.realm = data.realm;
+	          RoW.models.Player.food = data.food;
+	          RoW.models.Player.wood = data.wood;
+	          RoW.models.Player.stone = data.stone;
+	          RoW.models.Player.ore = data.ore;
+	          RoW.models.Player.gold = data.gold;
+	          RoW.models.Player.platinum = data.platinum;
+	        });
+	        
+	        Socket.on('player-update-incoming', (data) => {
+	          RoW.models.Player.id = data.id;
+	          RoW.models.Player.pid = data.pid;
+	          RoW.models.Player.name = data.name;
+	          RoW.models.Player.gender = data.gender;
+	          RoW.models.Player.avatar = data.avatar;
+	          RoW.models.Player.chat = data.chat;
+	          RoW.models.Player.power = data.power;
+	          RoW.models.Player.realm = data.realm;
+	          RoW.models.Player.food = data.food;
+	          RoW.models.Player.wood = data.wood;
+	          RoW.models.Player.stone = data.stone;
+	          RoW.models.Player.ore = data.ore;
+	          RoW.models.Player.gold = data.gold;
+	          RoW.models.Player.platinum = data.platinum;
+	        });
+	      }
+	    },
+	    User: {
+	      init: () => {
+	        Socket.on("login-success", (data) => {
+	          RoW.models.User.id = data.user.id;
+	          RoW.models.User.email = data.user.email;
+	          
+	          RoW.models.Player.name = data.player.name;
+	          RoW.models.Player.gender = data.player.gender;
+	          RoW.models.Player.avatar = data.player.avatar;
+	          RoW.models.Player.chat = data.player.chat;
+	          RoW.models.Player.power = data.player.power;
+	          RoW.models.Player.realm = data.player.realm;
+	          RoW.models.Player.food = data.player.food;
+	          RoW.models.Player.wood = data.player.wood;
+	          RoW.models.Player.stone = data.player.stone;
+	          RoW.models.Player.ore = data.player.ore;
+	          RoW.models.Player.gold = data.player.gold;
+	          RoW.models.Player.platinum = data.player.platinum;
+	          RoW.models.User.token = data.token;
+	        
+	          setCookie('uid', RoW.models.User.getId(), 365);
+	        
+	          window.location = "http://"+RoW.host+"/game";
+	      });
+	      
+	        Socket.on("login-failed", (data) => {
+	          window.location = "http://"+RoW.host+data.redirect;
+	        });
+	      
+	        Socket.on("register-success", (data) => {
+	          window.location = "http://"+RoW.host+data.redirect;
+	        });
+	      
+	        Socket.on("logout-success", (data) => {
+	          window.location = "http://"+RoW.host;
+	        });
+	      
+	        Socket.on("user-update-incoming", (data) => {
+	          RoW.models.User.id = data.user.id;
+	          RoW.models.User.email = data.user.email;
+	          RoW.models.User.token = data.token;
+	        });
+	      
+	        Socket.on("user-get-success", (data) => {
+	          RoW.models.User.id = data.user.id;
+	          RoW.models.User.email = data.user.email;
+	          RoW.models.User.token = data.token;
+	        });
+	      }
+	    },
+	    Tpl: {
+	      init: () => {
+	        Socket.on("tpl-gender-result", (data) => {
+	          var html = RoW.controllers.Tpl.build(data);
+	          $('.avatars').html(html);
+	        });
+	      },
+	      build: (data) => {
+	        var template = Handlebars.compile(data.html);
+	        return template(data.data);
+	      },
+	    }
+	  }
+	};
+		document.addEventListener( 'DOMContentLoaded', () => {
+	RoW.init();
+	RoW.controllers.User.init();
+	RoW.controllers.Tpl.init();
+	RoW.controllers.Player.init();
+}, false);
+
+	Handlebars.registerHelper('iff', (a, operator, b, opts) => {
+		var bool = false;
+		switch(operator) {
+			case '==':
+				bool = a == b;
+			break;
+			case '>':
+				bool = a > b;
+			break;
+			case '<':
+				bool = a < b;
+			break;
+			default:
+				throw "Unknown operator " + operator;
+		}
+		
+		if (bool) {
+			return opts.fn(this);
+		} else {
+			return opts.inverse(this);
+		}
+	});
+	</script>
+	</head>
+	<body>
+		<div id="loading"></div>
+		<div class="mt-auto h-100">
+			{{{body}}}
+		</div>
+		<script>
+		function onReady(callback) {
+			var intervalId = window.setInterval(function() {
+				if (document.getElementsByTagName('body')[0] !== undefined) {
+					window.clearInterval(intervalId);
+					callback.call(this);
+				}
+			}, 1000);
+		}
+
+		function setVisible(selector, visible) {
+			document.querySelector(selector).style.display = visible ? 'block' : 'none';
+		}
+
+		onReady(function() {
+			setVisible('#gameDiv', true);
+			setVisible('#loading', false);
+		});
+		
+		$(document).on('click', '.viewSelect', function(e){
+		  e.preventDefault();
+		  
+		  var idStr = $(this).attr('id');
+		  var idParts = idStr.split('-');
+		  var id = idParts[1];
+		  console.log(id);
+		  Socket.emit('tpl-view-change', id);
+		});
+		
+		function setCookie(name,value,days) {
+			var expires = "";
+			if (days) {
+				var date = new Date();
+				date.setTime(date.getTime() + (days*24*60*60*1000));
+				expires = "; expires=" + date.toUTCString();
+			}
+			document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+		}
+		function getCookie(name) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0;i < ca.length;i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1,c.length);
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			return null;
+		}
+		function eraseCookie(name) {   
+			document.cookie = name+'=; Max-Age=-99999999;';  
+		}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,320 @@
+html, body{
+	height: 100%;
+}
+
+body {
+    margin: 0 auto;
+    background-color: #67945f;
+    align-items: stretch;
+}
+
+#loading {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(192, 192, 192, 0.5);
+	background-image: url("https://i.stack.imgur.com/MnyxU.gif");
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#overlay {
+	visibility: hidden;
+	position: absolute;
+	top: 20px;
+	bottom: 20px;
+	width:88%;
+	margin-left: 6%;
+	text-align:center;
+	background-color: #000;
+	z-index: 1000;
+	overflow-y: scroll;
+	box-shadow: -1px 2px 15px -1px #000;
+}
+ 
+#overlay div {
+	margin: auto;
+	background-color: #fff;
+	padding:15px;
+}
+ 
+#modal h3 {
+	display: inline;
+}
+ 
+#modal p {
+	text-align: left;
+}
+ 
+#modal p img {
+	float: left;
+	width: 60px;
+	height: auto;
+	padding-right: 15px;
+	padding-bottom: 15px;
+}
+ 
+#state {
+  color: rgb(200,200,200);
+  font-family: Monaco;
+  font-size: 18px;
+  line-height: 1em;
+  padding: 20px;
+  text-align: center;
+}
+
+#progress {
+  font-size: 50px;
+  left: 50%;
+  letter-spacing: 0.1em;
+  margin: -25px 0 0 -100px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 200px;
+}
+
+#progressbar {
+  left: 10%;
+  position: absolute;
+  text-align: center;
+  top: 55%;
+  right: 10%;
+  
+  .bar {
+    @include box-shadow(cyan 0 0 10px 1px);
+    @include transition(all 300ms);
+    background-color: cyan;
+    height: 1px;
+    display: inline-block;
+    width: 0%;
+  }
+  
+  .bar.complete {
+    @include box-shadow(rgba(255, 0, 0, 0) 0 0 10px 10px);
+  }
+}
+.my-flex-container {
+    border: 2px solid green;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+#gameDiv {
+	background: #fff;
+	border: 2px solid black;
+}
+
+#gameHead{
+  font-size: 0.6em;
+  border-bottom: 2px solid black;
+  background-color:#ccc;
+}
+
+#city-view{
+	background-color: #173b19;
+	position: absolute;
+	top: 0;
+	left:0;
+	height: 525px;
+	width: 900px;
+}
+
+#city-map{
+	background-image: url("/images/game/city-bg2.png" );
+	background-position: 0px 0px;
+	width: 900px;
+	height: 480px;
+	overflow: hidden;
+	position: relative;
+	margin-top: 0px;
+}
+
+#city-map a{
+	display:block;
+	position: absolute;
+}
+
+.city-plot {
+	background-image: url('/images/game/city-plot.png');
+	height: 46px;
+	width: 91px;
+}
+
+.house{
+
+}
+
+.barracks{
+	z-index: 1000;
+	background-image: url('/images/game/buildings/barracks/1.png');
+	height: 48px;
+	width: 67px;
+}
+
+.range{
+
+}
+
+.stable{
+
+}
+
+.siege{
+
+}
+
+.tower{
+
+}
+
+.mill{
+
+}
+
+.lumber{
+
+}
+
+.mine{
+
+}
+
+#plot1 {
+	left: 108px;
+	top: 209px;
+}
+
+#plot2{
+	left: 216px;
+	top: 218px;
+}
+
+#plot3{
+	left: 150px;
+	top: 256px;
+}
+
+#plot4{
+	left: 240px;
+	top: 270px;
+}
+
+#plot5{
+	left: 314px;
+	top: 232px;
+}
+
+#plot6{
+	left: 298px;
+	top: 300px;
+}
+
+#plot7{
+	left: 370px;
+	top: 260px;
+}
+
+#plot8{
+
+}
+
+#plot9{
+
+}
+
+#plot10{
+
+}
+
+#plot11{
+
+}
+
+#plot12{
+
+}
+
+#plot13{
+
+}
+
+#plot14{
+
+}
+
+#plot15{
+
+}
+
+#plot16{
+
+}
+
+#plot17{
+
+}
+
+#plot18{
+
+}
+
+#plot19{
+
+}
+
+#plot20{
+
+}
+
+#plot21{
+
+}
+
+#plot22{
+
+}
+
+#plot23{
+
+}
+
+#plot24{
+
+}
+
+#plot25{
+
+}
+
+#plot26{
+
+}
+
+#plot27{
+
+}
+
+#plot28{
+
+}
+
+#plot29{
+
+}
+
+#plot-castle{
+
+}
+
+#plot-towncenter{
+
+}
+
+#plot-wall{
+
+}

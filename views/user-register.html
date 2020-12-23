@@ -1,0 +1,59 @@
+<form class="form-signin">
+  <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
+  <label for="inputUsername" class="name-label sr-only">Lord </label>
+  <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Username" required autofocus>
+  
+  <label for="inputGender" class="sr-only">Gender</label>
+  <select name="gender" id="inputGender" class="form-control">
+    <option value="0">Male</option>
+    <option value="1">Female</option>
+  </select>
+  
+  <label for="inputEmail" class="sr-only">Email address</label>
+  <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address" required autofocus>
+  
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+  
+  <p>Select an Avatar</p>
+  <div class="avatars container" id="inputAvatar">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/1.png">
+        <input type="radio" id="1" name="avatar" value="1" checked>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/2.png">
+        <input type="radio" id="2" name="avatar" value="2">
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/3.png">
+        <input type="radio" id="3" name="avatar" value="3">
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/4.png">
+        <input type="radio" id="4" name="avatar" value="4">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/5.png">
+        <input type="radio" id="5" name="avatar" value="5">
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/6.png">
+        <input type="radio" id="6" name="avatar" value="6">
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/7.png">
+        <input type="radio" id="7" name="avatar" value="7">
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3">
+        <img src="/images/game/avatars/male/8.png">
+        <input type="radio" id="8" name="avatar" value="8">
+      </div>
+    </div>
+  </div>
+  
+  <button id="register" class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Register</button>
+</form>
