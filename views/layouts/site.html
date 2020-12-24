@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<title>{{pageTitle}} &bull; Realm of Warriors</title>
+<title>{{pageTitle}} &bull; Realms of Camelot</title>
 
 <meta charset="iso-8859-1">
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -18,7 +18,7 @@ for(var i = 0; i < IMGS.length; i++){
 	$('head').append(preImg);
 }
 var Socket = io.connect();
-var RoW = {
+var RoC = {
 	host: '{{globalVar "host"}}',
 	port: {{globalVar "port"}},
 	init: () => {
@@ -53,94 +53,94 @@ var RoW = {
 	    Player: {
 	      init: () => {
 	        Socket.on("player-get-success", (data) => {
-	          RoW.models.Player.id = data.id;
-	          RoW.models.Player.pid = data.pid;
-	          RoW.models.Player.name = data.name;
-	          RoW.models.Player.gender = data.gender;
-	          RoW.models.Player.avatar = data.avatar;
-	          RoW.models.Player.chat = data.chat;
-	          RoW.models.Player.power = data.power;
-	          RoW.models.Player.realm = data.realm;
-	          RoW.models.Player.food = data.food;
-	          RoW.models.Player.wood = data.wood;
-	          RoW.models.Player.stone = data.stone;
-	          RoW.models.Player.ore = data.ore;
-	          RoW.models.Player.gold = data.gold;
-	          RoW.models.Player.platinum = data.platinum;
+	          RoC.models.Player.id = data.id;
+	          RoC.models.Player.pid = data.pid;
+	          RoC.models.Player.name = data.name;
+	          RoC.models.Player.gender = data.gender;
+	          RoC.models.Player.avatar = data.avatar;
+	          RoC.models.Player.chat = data.chat;
+	          RoC.models.Player.power = data.power;
+	          RoC.models.Player.realm = data.realm;
+	          RoC.models.Player.food = data.food;
+	          RoC.models.Player.wood = data.wood;
+	          RoC.models.Player.stone = data.stone;
+	          RoC.models.Player.ore = data.ore;
+	          RoC.models.Player.gold = data.gold;
+	          RoC.models.Player.platinum = data.platinum;
 	        });
 	        
 	        Socket.on('player-update-incoming', (data) => {
-	          RoW.models.Player.id = data.id;
-	          RoW.models.Player.pid = data.pid;
-	          RoW.models.Player.name = data.name;
-	          RoW.models.Player.gender = data.gender;
-	          RoW.models.Player.avatar = data.avatar;
-	          RoW.models.Player.chat = data.chat;
-	          RoW.models.Player.power = data.power;
-	          RoW.models.Player.realm = data.realm;
-	          RoW.models.Player.food = data.food;
-	          RoW.models.Player.wood = data.wood;
-	          RoW.models.Player.stone = data.stone;
-	          RoW.models.Player.ore = data.ore;
-	          RoW.models.Player.gold = data.gold;
-	          RoW.models.Player.platinum = data.platinum;
+	          RoC.models.Player.id = data.id;
+	          RoC.models.Player.pid = data.pid;
+	          RoC.models.Player.name = data.name;
+	          RoC.models.Player.gender = data.gender;
+	          RoC.models.Player.avatar = data.avatar;
+	          RoC.models.Player.chat = data.chat;
+	          RoC.models.Player.power = data.power;
+	          RoC.models.Player.realm = data.realm;
+	          RoC.models.Player.food = data.food;
+	          RoC.models.Player.wood = data.wood;
+	          RoC.models.Player.stone = data.stone;
+	          RoC.models.Player.ore = data.ore;
+	          RoC.models.Player.gold = data.gold;
+	          RoC.models.Player.platinum = data.platinum;
 	        });
 	      }
 	    },
 	    User: {
 	      init: () => {
 	        Socket.on("login-success", (data) => {
-	          RoW.models.User.id = data.user.id;
-	          RoW.models.User.email = data.user.email;
+	          RoC.models.User.id = data.user.id;
+	          RoC.models.User.email = data.user.email;
 	          
-	          RoW.models.Player.name = data.player.name;
-	          RoW.models.Player.gender = data.player.gender;
-	          RoW.models.Player.avatar = data.player.avatar;
-	          RoW.models.Player.chat = data.player.chat;
-	          RoW.models.Player.power = data.player.power;
-	          RoW.models.Player.realm = data.player.realm;
-	          RoW.models.Player.food = data.player.food;
-	          RoW.models.Player.wood = data.player.wood;
-	          RoW.models.Player.stone = data.player.stone;
-	          RoW.models.Player.ore = data.player.ore;
-	          RoW.models.Player.gold = data.player.gold;
-	          RoW.models.Player.platinum = data.player.platinum;
-	          RoW.models.User.token = data.token;
+	          RoC.models.Player.name = data.player.name;
+	          RoC.models.Player.gender = data.player.gender;
+	          RoC.models.Player.avatar = data.player.avatar;
+	          RoC.models.Player.chat = data.player.chat;
+	          RoC.models.Player.power = data.player.power;
+	          RoC.models.Player.realm = data.player.realm;
+	          RoC.models.Player.food = data.player.food;
+	          RoC.models.Player.wood = data.player.wood;
+	          RoC.models.Player.stone = data.player.stone;
+	          RoC.models.Player.ore = data.player.ore;
+	          RoC.models.Player.gold = data.player.gold;
+	          RoC.models.Player.platinum = data.player.platinum;
+	          RoC.models.User.token = data.token;
 	        
-	          setCookie('uid', RoW.models.User.id, 365);
+	          setCookie('uid', RoC.models.User.id, 365);
 	        
-	          window.location = "http://"+RoW.host+"/game";
+	          window.location = "http://"+RoC.host+"/game";
 	      });
 	      
 	        Socket.on("login-failed", (data) => {
-	          window.location = "http://"+RoW.host+data.redirect;
+	          window.location = "http://"+RoC.host+data.redirect;
 	        });
 	      
 	        Socket.on("register-success", (data) => {
-	          window.location = "http://"+RoW.host+data.redirect;
+	          window.location = "http://"+RoC.host+data.redirect;
 	        });
 	      
 	        Socket.on("logout-success", (data) => {
-	          window.location = "http://"+RoW.host;
+	          window.location = "http://"+RoC.host;
 	        });
 	      
 	        Socket.on("user-update-incoming", (data) => {
-	          RoW.models.User.id = data.user.id;
-	          RoW.models.User.email = data.user.email;
-	          RoW.models.User.token = data.token;
+	          RoC.models.User.id = data.user.id;
+	          RoC.models.User.email = data.user.email;
+	          RoC.models.User.token = data.token;
 	        });
 	      
 	        Socket.on("user-get-success", (data) => {
-	          RoW.models.User.id = data.user.id;
-	          RoW.models.User.email = data.user.email;
-	          RoW.models.User.token = data.token;
+	          RoC.models.User.id = data.user.id;
+	          RoC.models.User.email = data.user.email;
+	          RoC.models.User.token = data.token;
 	        });
 	      }
 	    },
 	    Tpl: {
 	      init: () => {
 	        Socket.on("tpl-gender-result", (data) => {
-	          var html = RoW.controllers.Tpl.build(data);
+	          var html = RoC.controllers.Tpl.build(data);
 	          console.log(html);
 	          $('.avatars').html(html);
 	        });
@@ -154,10 +154,10 @@ var RoW = {
 	};
 	
 	 document.addEventListener( 'DOMContentLoaded', () => {
-	 RoW.init();
-	 RoW.controllers.User.init();
-	 RoW.controllers.Tpl.init();
-	 RoW.controllers.Player.init();
+	 RoC.init();
+	 RoC.controllers.User.init();
+	 RoC.controllers.Tpl.init();
+	 RoC.controllers.Player.init();
 }, false);
 	</script>
 	<link rel="stylesheet" href="/css/site.css">
@@ -193,7 +193,7 @@ var RoW = {
 	
 	<!-- Footer -->
 	<footer class="mastfoot mt-auto">
-		<p class="lead">Copyright &copy; 2020 - All Rights Reserved - <a href="#">Realm of Warriors</a></p>
+		<p class="lead">Copyright &copy; 2020 - All Rights Reserved - <a href="#">Realms of Camelot</a></p>
 		
 		<p><a href="mailto:jason.allen.oneal@gmail.com">jason dot allen dot oneal at gmail dot com</a></p>
 	</footer>

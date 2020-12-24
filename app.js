@@ -123,6 +123,8 @@ global.async = async;
 var UserController = require('./lib/controllers/user');
 var TplController = require('./lib/controllers/tpl');
 var PlayerController = require('./lib/controllers/player');
+var CityController = require('./lib/controllers/city');
+var BuildingController = require('./lib/controllers/building');
 
 const routes = require("./routes");
 app.use(routes);
@@ -132,6 +134,8 @@ io.on('connection', function(socket){
 	UserController.init(socket);
 	TplController.init(socket);
 	PlayerController.init(socket);
+	CityController.init(socket);
+	BuildingController.init(socket);
 });
 
 server.listen(process.env.PORT, function () {

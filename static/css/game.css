@@ -145,8 +145,18 @@ body {
 	width: 91px;
 }
 
-.house{
+.towncenter {
+	background-image: url('/images/game/buildings/towncenter/1.png');
+	height: 93px;
+	width: 128px;
+}
 
+.house{
+	background-image: url('/images/game/buildings/house/1.png');
+	height: 59px;
+	width: 58px;
+	top: -15px;
+	left: 10px;
 }
 
 .barracks{
@@ -177,7 +187,9 @@ body {
 }
 
 .lumber{
-
+	background-image: url('/images/game/buildings/lumber/1.png');
+	height: 59px;
+	width: 58px;
 }
 
 .mine{
@@ -220,99 +232,123 @@ body {
 }
 
 #plot8{
-
+	left: 339px;
+	top: 338px;
 }
 
 #plot9{
-
+	left: 428px;
+	top: 292px;
 }
 
 #plot10{
-
+	left: 396px;
+	top: 370px;
 }
 
 #plot11{
-
+	left: 448px;
+	top: 338px;
 }
 
 #plot12{
-
+	left: 512px;
+	top: 310px;
 }
 
 #plot13{
-
+	left: 308px;
+	top: 178px;
 }
 
 #plot14{
-
+	left: 300px;
+	top: 106px;
 }
 
 #plot15{
-
+	left: 362px;
+	top: 78px;
 }
 
 #plot16{
-
+	left: 418px;
+	top: 46px;
 }
 
 #plot17{
-
+	left: 352px;
+	top: 142px;
 }
 
 #plot18{
-
+	left: 418px;
+	top: 112px;
 }
 
 #plot19{
-
+	left: 474px;
+	top: 82px;
 }
 
 #plot20{
-
+	left: 464px;
+	top: 158px;
 }
 
 #plot21{
-
+	left: 524px;
+	top: 128px;
 }
 
 #plot22{
-
+	left: 540px;
+	top: 180px;
 }
 
 #plot23{
-
+	left: 594px;
+	top: 150px;
 }
 
 #plot24{
-
+	left: 542px;
+	top: 238px;
 }
 
 #plot25{
-
+	left: 604px;
+	top: 208px;
 }
 
 #plot26{
-
+	left: 668px;
+	top: 178px;
 }
 
 #plot27{
-
+	left: 622px;
+	top: 256px;
 }
 
 #plot28{
-
+	left: 680px;
+	top: 232px;
 }
 
 #plot29{
-
+	left: 736px;
+	top: 204px;
 }
 
 #plot-castle{
-
+	left: 210px;
+	top: 150px;
 }
 
 #plot-towncenter{
-
+	left: 384px;
+	top: 170px;
 }
 
 #plot-wall{
