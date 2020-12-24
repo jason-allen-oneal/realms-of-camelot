@@ -184,6 +184,7 @@ var RoC = {
 				
 				Socket.on("city-get-buildings-results", (data) => {
 					RoC.models.City.buildings = data;
+					RoC.controllers.Tpl.buildCity();
 				});
 			}
 	    },
@@ -198,6 +199,15 @@ var RoC = {
 	        var template = Handlebars.compile(data.html);
 	        return template(data.data);
 	      },
+	      buildCity: () => {
+	      console.log(JSON.stringify(RoC.models.City.buildings));
+	      },
+	      buildFields: () => {
+	      
+	      },
+	      buildRealm: () => {
+	        
+	      }
 	    }
 	  }
 	};
@@ -207,6 +217,7 @@ var RoC = {
 	RoC.controllers.Tpl.init();
 	RoC.controllers.Player.init();
 	RoC.controllers.City.init();
+	Socket.emit("city-get", RoC.models.Player.id, RoC.models.Player.realm);
 }, false);
 
 	Handlebars.registerHelper('iff', (a, operator, b, opts) => {
