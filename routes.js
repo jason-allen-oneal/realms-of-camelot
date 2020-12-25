@@ -25,22 +25,18 @@ router.get('/game/', (req, res) => {
   if(typeof User == 'undefined'){
     res.redirect('/login/');
   }else{
-	  res.render('game-main', {
-		  pageTitle: 'Play',
-		  id: User.id,
-		  pid: Player.id,
-		  name: Player.name,
-		  avatar: "/images/game/avatars/"+Player.gender+"/"+Player.avatar+".png",
-		  email: User.email,
-		  power: Player.power,
-		  realm: Player.realm,
-		  food: Player.food,
-		  wood: Player.wood,
-		  stone: Player.stone,
-		  ore: Player.ore,
-		  gold: Player.gold,
-		  platinum: Player.platinum,
-	  });
+   console.log(Buildings);
+   var data = {
+    pageTitle: 'Play',
+    User: User,
+    Player: Player,
+    City: City,
+    Buildings: Buildings
+   };
+   
+   data.Player.avatarUrl = "/images/game/avatars/"+Player.gender+"/"+Player.avatar+".png";
+   
+	  res.render('game-main', data);
 	 }
 });
 

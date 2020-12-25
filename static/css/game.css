@@ -98,11 +98,6 @@ body {
     @include box-shadow(rgba(255, 0, 0, 0) 0 0 10px 10px);
   }
 }
-.my-flex-container {
-    border: 2px solid green;
-    height: 100%;
-    margin-bottom: 20px;
-}
 
 #gameDiv {
 	background: #fff;
@@ -145,8 +140,14 @@ body {
 	width: 91px;
 }
 
-.towncenter {
+.towncenter-1 {
 	background-image: url('/images/game/buildings/towncenter/1.png');
+	height: 93px;
+	width: 128px;
+}
+
+.towncenter-2 {
+	background-image: url('/images/game/buildings/towncenter/2.png');
 	height: 93px;
 	width: 128px;
 }

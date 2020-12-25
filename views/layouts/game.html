@@ -29,10 +29,17 @@
 var RoC = {
  host: '{{globalVar "host"}}',
  port: {{globalVar "port"}},
- init: () => {
+ init: (callback) => {
   $(document).on($.modal.AFTER_CLOSE, function(event, modal){
    $(modal.$elm[0]).remove();
   });
+  
+  RoC.controllers.User.init();
+	RoC.controllers.Tpl.init();
+	RoC.controllers.Player.init();
+	RoC.controllers.City.init();
+	
+	callback();
  },
  Game:{
   tileTypesObject: {
@@ -46,38 +53,69 @@ var RoC = {
    'city': 7
   },
   tileTypesArray: ['moor', 'plain', 'grassland', 'lake', 'hill', 'mountain', 'barbarian', 'city'],
+  buildingTypesObject: {
+   towncenter: 0,
+   house: 1,
+   lumber: 2,
+   mill: 2,
+   mine: 3,
+   barracks: 4,
+   range: 5,
+   stable: 6,
+   siege: 7,
+   tower: 8,
+   blacksmith: 9,
+   market: 10,
+   monastery: 11,
+   university: 12,
+   wall: 13,
+   castle: 14
+  },
+  buildingTypesArray: ["towncenter","house","lumber","mill","mine","barracks","range","stable","siege","tower","blacksmith","market","monastery","university","wall","castle"],
  },
  models: {
   Player: {
-	      id: 0,
-	      pid: 0,
-	      name: '',
-	      gender: '',
-	      avatar: '',
-	      power: 0,
-	      realm: 0,
-	      chat: 0,
-	      food: 0,
-	      wood: 0,
-	      stone: 0,
-	      ore: 0,
-	      gold: 0,
-	      platinum: 0,
+	      id: {{Player.id}},
+	      uid: {{Player.uid}},
+	      name: "{{Player.name}}",
+	      gender: "{{Player.gender}}",
+	      avatar: "{{Player.avatar}}",
+	      power: {{Player.power}},
+	      realm: {{Player.realm}},
+	      chat: {{Player.chat}},
+	      food: {{Player.food}},
+	      wood: {{Player.wood}},
+	      stone: {{Player.stone}},
+	      ore: {{Player.ore}},
+	      gold: {{Player.gold}},
+	      platinum: {{Player.platinum}},
 	    },
 	    User: {
-	      id: 0,
-	      email: '',
-	      token: '',
+	      id: {{User.id}},
+	      email: "{{User.email}}",
+	      token: "{{User.token}}",
 	    },
 	    City: {
-			id: 0,
-			name: '',
-			owner: 0,
-			age: 1,
-			x: 0,
-			y: 0,
-			realm: 1,
-			buildings: []
+			id: {{City.id}},
+			name: "{{City.name}}",
+			owner: {{City.owner}},
+			age: {{City.age}},
+			x: {{City.x}},
+			y: {{City.y}},
+			realm: {{City.realm}},
+			buildings: [
+			 {{#each Buildings}}
+			 {
+			   id: {{this.id}},
+			   type: {{this.type}},
+			   level: {{this.level}},
+			   position: {{this.position}},
+			   owner: {{this.owner}},
+			   city: {{this.city}},
+			   realm: {{this.realm}}
+			 }{{#unless @last}},{{/unless}}
+			 {{/each}}
+			]
 	    },
 	  },
 	  controllers: {
@@ -200,7 +238,25 @@ var RoC = {
 	        return template(data.data);
 	      },
 	      buildCity: () => {
-	      console.log(JSON.stringify(RoC.models.City.buildings));
+	        for(var i = 0; i < RoC.models.City.buildings.length; i++){
+	          var b = RoC.models.City.buildings[i], $el;
+	          if(b.type == 0){
+	           // towncenter
+	           $el = $('a#plot-towncenter');
+	           el.addClass('towncenter-'+RoC.models.City.age);
+	          }else if(b.type == 13){
+	           // wall
+	           
+	          }else if(b.type == 14){
+	           // castle
+	           $el = $('a#plot-castle');
+	           
+	          }else{
+	           $el = $('a#plot'+b.position);
+	           var c = RoC.Game.buildingTypeArray[b.type]+'-'+RoC.models.City.age;
+	           $el.addClass(c);
+	          }
+	        }
 	      },
 	      buildFields: () => {
 	      
@@ -209,15 +265,22 @@ var RoC = {
 	        
 	      }
 	    }
+	  },
+	  events: {
+	   City: {
+	    init: function(){
+	     $(document).on('click', '.towncenter', function(e){
+	      e.preventDefault();
+	      
+	     });
+	    }
+	   }
 	  }
 	};
 		document.addEventListener( 'DOMContentLoaded', () => {
-	RoC.init();
-	RoC.controllers.User.init();
-	RoC.controllers.Tpl.init();
-	RoC.controllers.Player.init();
-	RoC.controllers.City.init();
-	Socket.emit("city-get", RoC.models.Player.id, RoC.models.Player.realm);
+	RoC.init(function(){
+	  RoC.controllers.Tpl.buildCity();
+	});
 }, false);
 
 	Handlebars.registerHelper('iff', (a, operator, b, opts) => {
@@ -278,7 +341,7 @@ var RoC = {
 		  var idStr = $(this).attr('id');
 		  var idParts = idStr.split('-');
 		  var id = idParts[1];
-		  console.log(id);
+		  
 		  Socket.emit('tpl-view-change', id);
 		});
 		
