@@ -1,0 +1,15 @@
+<div class="container-fluid">
+ <div class="row">
+  {{#each buildOpts}}
+  <div class="col-lg-3 col-md-3 col-sm-3 ml-auto">
+   {{name}}
+   <img src="/images/game/buildings/{{name}}/{{age}}.png"><br>
+   {{#each costs}}
+   {{name}}<br>
+   {{@key}}: {{this}}<br>
+   {{/each}}
+   <input type="button" class="button small" id="build-select-{{type}}" value="Build"{{#if canBuild}}{{elze}} disabled{{/if}}>
+  </div>
+  {{/each}}
+ </div>
+</div>

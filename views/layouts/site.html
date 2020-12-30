@@ -11,153 +11,20 @@
 <script type="text/javascript" src="/js/vendor/modal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 <script type="text/javascript" src="/js/preload.js"></script>
-
+<script type="text/javascript" src="/js/main.js"></script>
 <script>
-for(var i = 0; i < IMGS.length; i++){
-	var preImg = $('<link rel="prefetch" href="'+IMGS[i]+'" as="image">');
-	$('head').append(preImg);
-}
-var Socket = io.connect();
 var RoC = {
 	host: '{{globalVar "host"}}',
 	port: {{globalVar "port"}},
-	init: () => {
-		$(document).on($.modal.AFTER_CLOSE, function(event, modal){
-			$(modal.$elm[0]).remove();
-		});
-	  },
-	  models: {
-	    Player: {
-	      id: 0,
-	      pid: 0,
-	      name: '',
-	      gender: '',
-	      avatar: '',
-	      power: 0,
-	      realm: 0,
-	      chat: 0,
-	      food: 0,
-	      wood: 0,
-	      stone: 0,
-	      ore: 0,
-	      gold: 0,
-	      platinum: 0,
-	    },
-	    User: {
-	      id: 0,
-	      email: '',
-	      token: '',
-	    }
-	  },
-	  controllers: {
-	    Player: {
-	      init: () => {
-	        Socket.on("player-get-success", (data) => {
-	          RoC.models.Player.id = data.id;
-	          RoC.models.Player.pid = data.pid;
-	          RoC.models.Player.name = data.name;
-	          RoC.models.Player.gender = data.gender;
-	          RoC.models.Player.avatar = data.avatar;
-	          RoC.models.Player.chat = data.chat;
-	          RoC.models.Player.power = data.power;
-	          RoC.models.Player.realm = data.realm;
-	          RoC.models.Player.food = data.food;
-	          RoC.models.Player.wood = data.wood;
-	          RoC.models.Player.stone = data.stone;
-	          RoC.models.Player.ore = data.ore;
-	          RoC.models.Player.gold = data.gold;
-	          RoC.models.Player.platinum = data.platinum;
-	        });
-	        
-	        Socket.on('player-update-incoming', (data) => {
-	          RoC.models.Player.id = data.id;
-	          RoC.models.Player.pid = data.pid;
-	          RoC.models.Player.name = data.name;
-	          RoC.models.Player.gender = data.gender;
-	          RoC.models.Player.avatar = data.avatar;
-	          RoC.models.Player.chat = data.chat;
-	          RoC.models.Player.power = data.power;
-	          RoC.models.Player.realm = data.realm;
-	          RoC.models.Player.food = data.food;
-	          RoC.models.Player.wood = data.wood;
-	          RoC.models.Player.stone = data.stone;
-	          RoC.models.Player.ore = data.ore;
-	          RoC.models.Player.gold = data.gold;
-	          RoC.models.Player.platinum = data.platinum;
-	        });
-	      }
-	    },
-	    User: {
-	      init: () => {
-	        Socket.on("login-success", (data) => {
-	          RoC.models.User.id = data.user.id;
-	          RoC.models.User.email = data.user.email;
-	          
-	          RoC.models.Player.name = data.player.name;
-	          RoC.models.Player.gender = data.player.gender;
-	          RoC.models.Player.avatar = data.player.avatar;
-	          RoC.models.Player.chat = data.player.chat;
-	          RoC.models.Player.power = data.player.power;
-	          RoC.models.Player.realm = data.player.realm;
-	          RoC.models.Player.food = data.player.food;
-	          RoC.models.Player.wood = data.player.wood;
-	          RoC.models.Player.stone = data.player.stone;
-	          RoC.models.Player.ore = data.player.ore;
-	          RoC.models.Player.gold = data.player.gold;
-	          RoC.models.Player.platinum = data.player.platinum;
-	          RoC.models.User.token = data.token;
-	        
-	          setCookie('uid', RoC.models.User.id, 365);
-	        
-	          window.location = "http://"+RoC.host+"/game";
-	      });
-	      
-	        Socket.on("login-failed", (data) => {
-	          window.location = "http://"+RoC.host+data.redirect;
-	        });
-	      
-	        Socket.on("register-success", (data) => {
-	          window.location = "http://"+RoC.host+data.redirect;
-	        });
-	      
-	        Socket.on("logout-success", (data) => {
-	          window.location = "http://"+RoC.host;
-	        });
-	      
-	        Socket.on("user-update-incoming", (data) => {
-	          RoC.models.User.id = data.user.id;
-	          RoC.models.User.email = data.user.email;
-	          RoC.models.User.token = data.token;
-	        });
-	      
-	        Socket.on("user-get-success", (data) => {
-	          RoC.models.User.id = data.user.id;
-	          RoC.models.User.email = data.user.email;
-	          RoC.models.User.token = data.token;
-	        });
-	      }
-	    },
-	    Tpl: {
-	      init: () => {
-	        Socket.on("tpl-gender-result", (data) => {
-	          var html = RoC.controllers.Tpl.build(data);
-	          console.log(html);
-	          $('.avatars').html(html);
-	        });
-	      },
-	      build: (data) => {
-	        var template = Handlebars.compile(data.html);
-	        return template(data.data);
-	      },
-	    }
-	  }
-	};
-	
-	 document.addEventListener( 'DOMContentLoaded', () => {
-	 RoC.init();
+};
+</script>
+<script type="text/javascript" src="/js/controllers.js"></script>
+<script type="text/javascript" src="/js/tpl.js"></script>
+<script type="text/javascript" src="/js/events.js"></script>
+<script> document.addEventListener('DOMContentLoaded', () => {
 	 RoC.controllers.User.init();
-	 RoC.controllers.Tpl.init();
-	 RoC.controllers.Player.init();
+	 RoC.Tpl.init();
+	 RoC.events.init();
 }, false);
 	</script>
 	<link rel="stylesheet" href="/css/site.css">
@@ -177,12 +44,12 @@ var RoC = {
 <div class="cover-container d-flex w-100 h-100 p-3 mx-100 flex-column">
 	<header class="masthead mb-auto">
 		<div class="inner">
-			<h3 class="masthead-brand">Realm of Warriors</h3>
+			<h3 class="masthead-brand">Realms of Camelot</h3>
 			<nav class="nav nav-masthead justify-content-center">
-				<a class="nav-link active" href="/">Main</a>
+				<a class="nav-link active nav-main" href="/">Main</a>
 				
-				<a class="nav-link" href="/login/">Login</a>
-				<a class="nav-link" href="/register/">Register</a>
+				<a class="nav-link nav-login" href="/login/">Login</a>
+				<a class="nav-link nav-register" href="/register/">Register</a>
 				
 			</nav>
 		</div>
@@ -199,74 +66,5 @@ var RoC = {
 	</footer>
 	<!-- Footer -->
 </div>
-
-<script>
-$(document).on('change', '#inputGender', function(e){
-  e.preventDefault();
-  var gender = $(this).val();
-  Socket.emit('tpl-gender-change', gender);
-});
-
-$(document).on('click', '#register', function(e){
-	e.preventDefault();
-	
-	var name = $('input[name=username]').val(),
-		email = $('input[name=email]').val(),
-		gender = $('select[name=gender]').val(),
-		avatar = $("input[name='avatar']:checked").val(),
-		password = $('input[name=password]').val();
-	
-	if(name == '' || email == '' || password == ''){
-		// modal showing error
-	}else{
-	 var data = {
-	   name: name,
-	   email: email,
-	   gender: gender,
-	   avatar: avatar,
-	   password: password
-	 };
-
-		Socket.emit('user-register', data);
-	}
-});
-
-$(document).on('click', '#login', function(e){
-	e.preventDefault();
-	
-	var email = $('input[name=email]').val(),
-		password = $('input[name=password]').val();
-	
-	if(email == '' || password == ''){
-		// modal showing error
-		console.log('login error');
-	}else{
-		Socket.emit('user-login', {email: email, password: password});
-	}
-});
-
-function setCookie(name,value,days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-}
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-function eraseCookie(name) {   
-    document.cookie = name+'=; Max-Age=-99999999;';  
-}
-</script>
 </body>
 </html>

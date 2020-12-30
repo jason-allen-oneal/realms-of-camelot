@@ -1,5 +1,57 @@
 <!-- Game Area -->
-<div id="gameDiv">
-  {{> gameHead}}
-  {{> gameBody}}
+<div id="gameDiv" class="h-100">
+ <div class="row justify-content-between" id="gameHead">
+  <div class="col-3 text-center">
+   <img src="{{Player.avatarUrl}}" width=32 height=50><br>
+   {{Player.name}}<br>
+   Power: <span id="power">{{Player.power}}</span>
+  </div>
+  <div class="col">
+   <div class="row">
+    <div class="col-2">
+     <img src="/images/game/resources/food.png" height=16 width=16>&nbsp;<span id="food">{{Player.food}}</span>
+    </div>
+    <div class="col-2">
+     <img src="/images/game/resources/wood.png" height=16 width=16>&nbsp;<span id="wood">{{Player.wood}}</span>
+    </div>
+    <div class="col-2">
+     <img src="/images/game/resources/stone.png" height=16 width=16>&nbsp;<span id="stone">{{Player.stone}}</span>
+    </div>
+    <div class="col-2">
+     <img src="/images/game/resources/ore.png" height=16 width=16>&nbsp;<span id="ore">{{Player.ore}}</span>
+    </div>
+    <div class="col-2">
+     <img src="/images/game/resources/gold.png" height=16 width=16>&nbsp;<span id="gold">{{Player.gold}}</span>
+    </div>
+    <div class="col-2">
+     <img src="/images/game/resources/platinum.png" height=16 width=16>&nbsp;<span id="platinum">{{Player.platinum}}</span>
+    </div>
+   </div>
+  </div>
+  <div class="col-3 text-right">
+   <input type="button" class="button viewSelect" id="view-city" value="City">
+   <input type="button" class="button viewSelect" id="view-fields" value="Fields">
+   <input type="button" class="button viewSelect" id="view-realm" value="Realm">
+  </div>
+ </div>
+ <div class="row" id="gameBody">
+  <div class="col-12 gameViews">
+   {{> city}}
+   {{> fields}}
+   {{> realm}}
+  </div>
+ </div>
+ <div class="row">
+  <div class="col-4">
+   <div class="chatArea">
+    <div id="chatSelect">
+     Options:
+     <input type="button" id="chat-global" class="button small" value="Global">
+     <input type="button" id="chat-global" class="button small" value="Alliance">
+    </div>
+    <ul class="chatMessages"></ul>
+   </div>
+   <input type="text" class="chatMessage" placeholder="Type here..."/>
+  </div>
+ </div>
 </div>

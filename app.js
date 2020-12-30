@@ -120,8 +120,8 @@ app.engine('html', handlebars.engine); app.set('view engine', 'html');
 
 global.async = async;
 
-var UserController = require('./lib/controllers/user');
 var TplController = require('./lib/controllers/tpl');
+var UserController = require('./lib/controllers/user');
 var PlayerController = require('./lib/controllers/player');
 var CityController = require('./lib/controllers/city');
 var BuildingController = require('./lib/controllers/building');
@@ -131,8 +131,9 @@ app.use(routes);
 
 io.on('connection', function(socket){
 	console.log('User connected');
-	UserController.init(socket);
+	
 	TplController.init(socket);
+	UserController.init(socket);
 	PlayerController.init(socket);
 	CityController.init(socket);
 	BuildingController.init(socket);
