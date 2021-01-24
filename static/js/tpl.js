@@ -37,29 +37,6 @@ RoC.Tpl = {
   $('body').append(modalhtml);
   $('#'+id).modal();
  },
- buildCity: () => {
-  for(var i = 0; i < RoC.models.City.buildings.length; i++){
-   var b = RoC.models.City.buildings[i],
-    $el;
-	  if(b.type == 0){
-	   // towncenter
-	   $el = $('a#plot-towncenter');
-	   $el.addClass('building');
-	   $el.addClass('towncenter-'+RoC.models.City.age);
-	  }else if(b.type == 13){
-	   // wall
-	  }else if(b.type == 14){
-	   // castle
-	   $el = $('a#plot-castle');
-	   $el.addClass('building');
-	  }else{
-	   $el = $('a#plot'+b.position);
-	   var c = RoC.Game.buildingTypeArray[b.type]+'-'+RoC.models.City.age;
-	   $el.addClass(c);
-	   $el.addClass('building');
-	  }
-	 }
-	},
 	buildField: () => {
 	 for(var i = 0; i < RoC.models.Field.buildings.length; i++){
 	  var b = RoC.models.Field.buildings[i], $el;

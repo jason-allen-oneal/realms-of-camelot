@@ -59,8 +59,6 @@ RoC.events = {
 	  var id = idParts[1];
 	  $("#"+id+"-view").siblings().hide();
 	  $("#"+id+"-view").show();
-	  
-	  // Socket.emit('tpl-view-change', id);
 	 });
 	 
 	 // End Game events

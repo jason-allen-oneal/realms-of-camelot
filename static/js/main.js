@@ -66,8 +66,9 @@ function buildslot(el,e){
  if(el.hasClass('building')){
   // plot has building, open its dialog
  }else{
+  alert(el.attr('id'));
   // empty build slot. open build options
-  Socket.emit('tpl-build-options');
+  // Socket.emit('tpl-build-options');
  }
 }
 

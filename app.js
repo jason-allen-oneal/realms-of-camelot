@@ -1,26 +1,16 @@
 require('dotenv').config();
-const {mysql, pool} = require('./lib/mysql');
+
 const db = require('./lib/db');
 var express = require('express');
 const fs = require('fs');
 const path = require('path');
 const async = require('async');
 
-global.db = db;
 global.express = express;
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 
-var sessionConnection = mysql.createPool({
-    connectionLimit : 1,
-    timeout         : 60 * 60 * 1000,
-    host            : process.env['DB_HOST'],
-    user            : process.env.DB_USER,
-    password        : process.env.DB_PASS,
-    database        : process.env.DB_DB
-});
-
-var sessionStore = new MySQLStore({
+var Database = new MySQLStore({
 	expiration: 10800000,
 	createDatabaseTable: true,
     schema: {
@@ -31,18 +21,17 @@ var sessionStore = new MySQLStore({
 			data: 'data'
 		}
 	}
-}, sessionConnection);
+}, db);
 
-var url;
+global.db = Database;
+
 var globalVars = {
 	port: process.env.PORT
 };
 
 if(process.env.PRODUCTION){
-	url = "http://"+process.env.HOST+":"+process.env.PORT;
 	globalVars.host = process.env.HOST;
 }else{
-	url = "http://"+process.env.IP+":"+process.env.PORT;
 	globalVars.host = process.env.IP;
 }
 
@@ -140,5 +129,7 @@ io.on('connection', function(socket){
 });
 
 server.listen(process.env.PORT, function () {
-	console.log('RoC app listening on port '+process.env.PORT+'! Go to '+url)
+	console.log('RoC app listening on port '+process.env.PORT);
 });
+
+
